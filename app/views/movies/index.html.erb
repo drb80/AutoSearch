@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Movies" %>
+
+<h1>Movies</h1>
+
+<%= form_with(url: movies_path, method: :get,
+  data: { turbo_frame: "movie_results" }) do |f| %>
+  <%= f.text_field(:query, value: @query, placeholder: "Search movies...",
+    oninput: "this.form.requestSubmit()") %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<%= turbo_frame_tag "movie_results" do %>
+  <%# Render your search results here %>
+  <% @movies.each do |movie| %>
+    <p><%= movie.title %></p>
+  <% end %>
+<% end %>
+
+<%= link_to "New movie", new_movie_path %>
